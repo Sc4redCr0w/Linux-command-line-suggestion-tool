@@ -113,6 +113,6 @@ run.  Edit `install.sh` and uncomment that section if you want that behaviour.
 ## How to explain in a viva
 
 * **`history_reader.py`** – opens `~/.bash_history`, strips blank lines, and removes repeated consecutive commands (e.g. three `ls` in a row become one) to reduce noise.
-* **`predictor.py`** – `top_commands()` uses `collections.Counter` for O(n) frequency counting.  `predict_next()` builds a bigram Markov model (`dict[str, Counter]`) from all consecutive command pairs and looks up the last command to rank its successors.
+* **`predictor.py`** – `top_commands()` uses `collections.Counter` for O(n) frequency counting. `predict_next()` builds a bigram Markov model (`dict[str, Counter]`) from all consecutive command pairs and looks up the last command to rank its successors.
 * **`main.py`** – uses `argparse` for a clean CLI interface with optional `--top`, `--next`, `--limit`, and `--history` flags.  When no flag is given, both sections are shown.
 * **`install.sh`** – a portable Bash script that resolves its own directory with `${BASH_SOURCE[0]}`, checks for an existing alias with `grep -qF` before appending, making it safe to run multiple times.

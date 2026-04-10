@@ -48,13 +48,15 @@ fi
 # WARNING: This prints predictions after EVERY command, which can be noisy.
 # Only enable it if you find it useful.
 #
-# PROMPT_LINE="PROMPT_COMMAND='python3 ${MAIN_PY} --next 3 2>/dev/null; \${PROMPT_COMMAND}'"
+# PROMPT_CMD_ENTRY="python3 ${MAIN_PY} --next 3 2>/dev/null"
 # if grep -qF "PROMPT_COMMAND=" "${BASHRC}" 2>/dev/null; then
-#     echo "ℹ PROMPT_COMMAND already set – skipping."
+#     # Append to existing PROMPT_COMMAND
+#     echo "PROMPT_COMMAND=\"${PROMPT_CMD_ENTRY}; \${PROMPT_COMMAND}\"" >> "${BASHRC}"
 # else
-#     echo "${PROMPT_LINE}" >> "${BASHRC}"
-#     echo "✔ Added PROMPT_COMMAND integration to ${BASHRC}."
+#     # Set PROMPT_COMMAND for the first time
+#     echo "PROMPT_COMMAND=\"${PROMPT_CMD_ENTRY}\"" >> "${BASHRC}"
 # fi
+#     echo "✔ Added PROMPT_COMMAND integration to ${BASHRC}."
 
 echo ""
 echo "Done!  Reload your shell to activate the alias:"
