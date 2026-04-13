@@ -16,6 +16,9 @@ import os
 
 def get_history_path():
     """Return the absolute path to the bash history file."""
+    shell=os.environ.get("SHELL","")
+    if "zsh" in shell:
+        return os.path.expanduser("~/.zsh_history")
     return os.path.expanduser("~/.bash_history")
 
 
@@ -48,7 +51,24 @@ def read_history(path=None, max_entries=None):
         lines = fh.readlines()
 
     # Strip whitespace and remove blank lines
-    commands = [line.strip() for line in lines if line.strip()]
+
+
+   # commands = [line.strip() for line in lines if line.strip()]
+    commands = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+   
+       # Handle zsh format: ": timestamp:duration;command"
+        if ";" in line:
+            line = line.split(";", 1)[1]
+   
+       # Ignore internal/tool commands
+        if line.startswith("fc ") or line.startswith("suggest"):
+            continue
+   
+        commands.append(line)
 
     # Remove repeated consecutive duplicates:
     #   ['ls', 'ls', 'pwd', 'ls'] → ['ls', 'pwd', 'ls']
